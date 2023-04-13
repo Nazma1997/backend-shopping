@@ -4,8 +4,8 @@ const Product = require('../models/product');
 
 const getAll = async(req, res, next) => {
   try {
-    const product = await(await service.findAll()).reverse();
-    return res.status(200).json({message: 'Get all product', product})
+    const products = await(await service.findAll()).reverse();
+    return res.status(200).json( products)
   } catch (error) {
     next(error)
   }
