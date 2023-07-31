@@ -18,14 +18,14 @@ const findByProperty = (key, value) => {
 
 
 
-const create = ({id,productName, productQuantity,  productPrice, productCategory, productImage}) => {
-  const newCreate = new Product({id,productName, productQuantity, productPrice,  productCategory, productImage});
+const create = ({ name, writersName, description, image, category}) => {
+  const newCreate = new Product({ name, writersName, description, image, category, type});
   return newCreate.save()
 };
 
 
 const findAll = () => {
-  return Product.find().populate('productCategory')
+  return Product.find()
 };
 
 const update = async(id, data) => {

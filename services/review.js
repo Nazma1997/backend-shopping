@@ -8,8 +8,8 @@ const findByProperty = (key, value) => {
    return Review.findOne({[key]: value});
 };
 
-const create = ({customerName, customerImage, description}) => {
-  const newCreate = new Review({customerName, customerImage, description});
+const create = ({banglaName, englishName, image, category}) => {
+  const newCreate = new Review({banglaName, englishName, image, category});
   return newCreate.save()
 };
 

@@ -1,4 +1,3 @@
-const Category = require('../models/category');
 const service = require('../services/product');
 const Product = require('../models/product');
 
@@ -12,20 +11,14 @@ const getAll = async(req, res, next) => {
 };
 
 const createProduct = async(req, res, next) => {
-  const {id,productName, productQuantity, productPrice, productCategory, productImage} = req.body;
+ const {name, writersName, description, image, category, type} = req.body
 
   try {
-    const categoryId = await Category.findById(productCategory);
+   
 
-    if(!categoryId){
-      return res.status(404).json({message: 'Category not found'});
-    };
-
-    const product = await service.create({id,productName, productQuantity, productPrice, productCategory: categoryId._id, productImage});
+    const product = await service.create({name, writersName, description, image, category, type});
 
     await product.save();
-    categoryId.productId.push(product._id);
-    await categoryId.save();
 
     return res.status(201).json({message: 'Product create successfully', product})
 
@@ -37,7 +30,7 @@ const createProduct = async(req, res, next) => {
 
 const update = async(req, res, next) => {
   const productId = req.params.productId;
-  const {id,productName, productQuantity,  productPrice, productCategory, productImage} = req.body;
+  const { name, writersName, description, image, category} = req.body;
 
   try {
     const product = await service.findByProperty('_id', productId);
@@ -45,12 +38,12 @@ const update = async(req, res, next) => {
       throw error('Product not found', 400);
     }
 
-    product.id = id ?? product.id;
-    product.productName = productName ?? product.productName;
-    product.productQuantity = productQuantity ?? product.productQuantity;
-    product.productPrice = productPrice ?? product.productPrice;
-    product.productCategory = productCategory ?? product.productCategory;
-    product.productImage = productImage ?? product.productImage;
+
+    product.name = name ?? product.name;
+    product.image = image ?? product.image;
+    product.writersName = writersName ?? product.writersName;
+    product.description = description ?? product.description;
+    product.category = category ?? product.category;
 
     await product.save();
 

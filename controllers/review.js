@@ -11,11 +11,11 @@ const getAll = async(req, res, next) => {
 };
 
 const createProduct = async(req, res, next) => {
-  const {customerName, customerImage, description} = req.body;
+  const {banglaName, englishName, image, category} = req.body;
 
   try {
 
-    const product = await service.create({customerName, customerImage, description});
+    const product = await service.create({banglaName, englishName, image, category});
     await product.save();
   
     return res.status(201).json({message: 'Review created successfully', product})
@@ -28,7 +28,7 @@ const createProduct = async(req, res, next) => {
 
 const update = async(req, res, next) => {
   const id = req.params.productId;
-  const {customerName, customerImage, description} = req.body;
+  const {banglaName, englishName, image, category} = req.body;
 
   try {
     // const product = await service.findByProperty('_id', id);
@@ -37,9 +37,10 @@ const update = async(req, res, next) => {
       throw error('Product not found', 400);
     }
 
-    product.customerName = customerName ?? product.customerName;
-    product.customerImage = customerImage ?? product.customerImage;
-    product.description = description ?? product.description
+    product.banglaName = banglaName ?? product.banglaName;
+    product.englishName = englishName ?? product.englishName;
+    product.image = image ?? product.image;
+    product.category = category ?? product.category
    
 
     await product.save();
